@@ -1,5 +1,5 @@
 import "./globals.css";
-import {NextUIProvider} from "@nextui-org/react";
+import Providers from "@/app/providers";
 import AMFooter from "@/app/_components/footer";
 import AMNavbar from "@/app/_components/navbar";
 import {JetBrains_Mono, Josefin_Sans, Urbanist, Work_Sans} from "next/font/google";
@@ -42,11 +42,11 @@ export default function RootLayout({children}) {
     return (
         <html lang="en">
             <body className={`${workSans.variable} ${urbanist.variable} ${josefinSans.variable} ${jetBrainsMono.variable} antialiased light font-body`}>
-                <NextUIProvider>
+                <Providers>
                     <AMNavbar/>
                     {children}
                     <AMFooter/>
-                </NextUIProvider>
+                </Providers>
             </body>
         </html>
     );
