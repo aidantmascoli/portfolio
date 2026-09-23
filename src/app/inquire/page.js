@@ -44,28 +44,28 @@ const formReducer = (state, action) => {
 
 const inputClasses = {
     base: 'flex-1',
-    label: '!text-inherit',
+    label: 'text-inherit!',
     input: '!text-foreground',
     inputWrapper: [
-        '!transition-all',
+        'transition-all!',
         'border-indigo-500',
         'data-[hover=true]:border-indigo-400',
-        'data-[focus=true]:!border-indigo-600',
+        'data-[focus=true]:border-indigo-600!',
         'text-indigo-500',
         'data-[hover=true]:text-indigo-400',
-        'data-[focus=true]:!text-indigo-600',
+        'data-[focus=true]:text-indigo-600!',
     ]
 }
 
 const errorInputClasses = {
     base: 'flex-1',
-    label: '!text-inherit',
-    input: '!text-inherit',
+    label: 'text-inherit!',
+    input: 'text-inherit!',
     inputWrapper: [
-        '!border-red-500',
-        '!text-red-500',
+        'border-red-500!',
+        'text-red-500!',
     ],
-    errorMessage: '!text-red-500',
+    errorMessage: 'text-red-500!',
 }
 
 export default function Inquire() {
@@ -163,17 +163,17 @@ export default function Inquire() {
                                 }}
                                 classNames={{
                                     trigger: [
-                                        '!transition-all',
+                                        'transition-all!',
                                         'border-indigo-500',
                                         'data-[hover=true]:border-indigo-400',
-                                        'data-[open=true]:!border-indigo-600',
+                                        'data-[open=true]:border-indigo-600!',
                                         'data-[focus=true]:border-indigo-500',
                                         'text-indigo-500',
                                         'data-[hover=true]:text-indigo-400',
-                                        'data-[open=true]:!text-indigo-600',
+                                        'data-[open=true]:text-indigo-600!',
                                         'data-[focus=true]:text-indigo-500',
                                     ],
-                                    label: '!text-inherit',
+                                    label: 'text-inherit!',
                                     value: '!text-foreground',
                                     popoverContent: [
                                         'bg-default-100'

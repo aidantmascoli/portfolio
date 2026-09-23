@@ -52,7 +52,7 @@ export default function Projects() {
     });
 
     return <main className="min-h-screen w-full flex flex-col items-center" id="smooth-wrapper" ref={container}>
-        <div className="w-full max-w-screen-xl px-4 sm:px-8 pt-24" id="smooth-content">
+        <div className="w-full max-w-(--breakpoint-xl) px-4 sm:px-8 pt-24" id="smooth-content">
             <div className="flex flex-col md:flex-row gap-8 items-center mb-12">
                 <div ref={el => sections.current[0] = el} className="w-full md:w-2/3 flex flex-col gap-4">
                     <h4 className="text-red-400">Physical LED Controls</h4>

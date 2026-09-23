@@ -24,7 +24,7 @@ export default function Projects() {
     }, { scope: container });
 
     return <main className="min-h-screen w-full flex flex-col items-center" id="smooth-wrapper" ref={container}>
-        <div className="w-full max-w-screen-2xl px-4 sm:px-8 pt-24 pb-8 flex flex-col gap-4" id="smooth-content">
+        <div className="w-full max-w-(--breakpoint-2xl) px-4 sm:px-8 pt-24 pb-8 flex flex-col gap-4" id="smooth-content">
             <div>
                 <h1 className="text-center text-red-400">Physical LED Controls</h1>
                 <h2 className="text-center text-red-400">ECE Discovery Project</h2>

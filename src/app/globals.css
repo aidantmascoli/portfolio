@@ -1,6 +1,104 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin './hero.js';
+
+/* HeroUI component classes live in node_modules, which Tailwind skips by default */
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
+/* Color classes built dynamically in button.js and inquire/page.js (was `safelist`) */
+@source inline("{,hover:,data-[hover=true]:}{,!}{bg,text,border}-{default,red,orange,yellow,green,blue,indigo,violet,pink}-{50,{100..900..100},950}");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* `inline` so the next/font variables (set on <body>) resolve where the class is used */
+@theme inline {
+  --font-body: var(--font-work), "Roboto", sans-serif;
+  --font-heading: var(--font-urbanist), "Trebuchet MS", "Roboto", sans-serif;
+  --font-title: var(--font-josefin), "Trebuchet MS", "Roboto", sans-serif;
+  --font-mono: var(--font-jet-brains), "Ubuntu Mono", "Source Code Pro", monospace;
+}
+
+@theme {
+  --aspect-pdf: 17 / 22;
+}
+
+@utility max-w-unset {
+  max-width: unset;
+}
+
+@utility grid-cols-video {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) min-content;
+}
+
+@utility grid-rows-hero {
+  grid-template-rows: minmax(0, 1fr) max-content;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility cursor {
+  @apply relative;
+  @apply after:bg-green-600;
+  @apply after:absolute;
+  @apply after:-top-0.5;
+  @apply sm:after:-top-1.75;
+  @apply md:after:-top-2.25;
+  @apply lg:after:-top-2.75;
+  @apply xl:after:-top-3.75;
+  @apply after:-bottom-0.5;
+  @apply sm:after:-bottom-2;
+  @apply md:after:-bottom-2.5;
+  @apply lg:after:-bottom-3;
+  @apply xl:after:-bottom-4;
+  @apply after:-right-1;
+  @apply sm:after:-right-1.25;
+  @apply md:after:-right-1.5;
+  @apply lg:after:-right-1.75;
+  @apply xl:after:-right-2;
+  @apply after:w-1;
+  @apply sm:after:w-1.25;
+  @apply md:after:w-1.5;
+  @apply lg:after:w-1.75;
+  @apply xl:after:w-2;
+
+  &.animate:after {
+    animation: 1.5s cursor-blink infinite step-end;
+  }
+}
+
+@utility animate {
+  &.cursor:after {
+    animation: 1.5s cursor-blink infinite step-end;
+  }
+}
+
+@utility draw {
+  @apply stroke-orange-500;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 16px;
+}
 
 @layer base {
   h1 {
@@ -54,51 +152,9 @@
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
   @keyframes cursor-blink {
     0% { opacity: 0; }
     50% { opacity: 1; }
-  }
-
-  .cursor {
-    @apply relative;
-    @apply after:bg-green-600;
-    @apply after:absolute;
-    @apply after:-top-0.5;
-    @apply sm:after:top-[-0.4375rem];
-    @apply md:after:top-[-0.5625rem];
-    @apply lg:after:top-[-0.6875rem];
-    @apply xl:after:top-[-0.9375rem];
-    @apply after:-bottom-0.5;
-    @apply sm:after:-bottom-2;
-    @apply md:after:-bottom-2.5;
-    @apply lg:after:-bottom-3;
-    @apply xl:after:-bottom-4;
-    @apply after:-right-1;
-    @apply sm:after:right-[-0.3125rem];
-    @apply md:after:-right-1.5;
-    @apply lg:after:right-[-0.4375rem];
-    @apply xl:after:-right-2;
-    @apply after:w-1;
-    @apply sm:after:w-[0.3125rem];
-    @apply md:after:w-1.5;
-    @apply lg:after:w-[0.4375rem];
-    @apply xl:after:w-2;
-  }
-
-  .cursor.animate:after {
-    animation: 1.5s cursor-blink infinite step-end;
-  }
-
-  .draw {
-    @apply stroke-orange-500;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 16px;
   }
 }
 
