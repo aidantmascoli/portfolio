@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@plugin './hero.js';
+@plugin './hero.mjs';
 
 /* HeroUI component classes live in node_modules, which Tailwind skips by default */
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
