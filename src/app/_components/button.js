@@ -1,4 +1,4 @@
-import {Button, Link} from "@nextui-org/react";
+import {Button, Link} from "@heroui/react";
 
 export default function AMButton({ color='default', shade=900, href, onClick, children, className, ...props }) {
     const light = shade > 500 ? 50 : 950;

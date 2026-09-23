@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import AMButton from "@/app/_components/button";
 import Image from "next/image";
-import {Divider, Link} from "@nextui-org/react";
+import {Divider, Link} from "@heroui/react";
 import {IoArrowDownSharp} from "react-icons/io5";
 
 export default function About() {

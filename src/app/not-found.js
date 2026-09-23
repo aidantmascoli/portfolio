@@ -1,4 +1,4 @@
-import {Divider} from "@nextui-org/react";
+import {Divider} from "@heroui/react";
 
 export default function NotFound() {
     return <main className={'min-h-screen w-full flex flex-col items-center'} id={'smooth-wrapper'}>

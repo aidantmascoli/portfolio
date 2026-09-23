@@ -1,7 +1,7 @@
 'use client'
 
 import { useReducer } from 'react';
-import { Card, CardBody, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { Card, CardBody, Input, Select, SelectItem, Textarea } from "@heroui/react";
 import AMButton from "@/app/_components/button";
 
 // Form reducer

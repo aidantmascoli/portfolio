@@ -8,7 +8,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import AMButton from "@/app/_components/button";
 import {IoArrowDownSharp} from "react-icons/io5";
 import Image from "next/image";
-import {Link} from "@nextui-org/react";
+import {Link} from "@heroui/react";
 
 export default function Resume() {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
