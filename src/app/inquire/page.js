@@ -1,8 +1,11 @@
 'use client'
 
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 import { Card, CardBody, Input, Select, SelectItem, Textarea } from "@heroui/react";
+import { Turnstile } from "@marsidev/react-turnstile";
 import AMButton from "@/app/_components/button";
+import { sendInquiry } from "@/app/inquire/actions";
+import { interests } from "@/app/inquire/interests";
 
 // Form reducer
 const initialState = {
@@ -10,7 +13,10 @@ const initialState = {
     email: '',
     interest: new Set([]),
     message: '',
+    company: '', // honeypot
+    turnstileToken: '',
     sending: false,
+    sent: false,
     errors: {}
 };
 
@@ -35,6 +41,14 @@ const formReducer = (state, action) => {
                 ...state,
                 errors: action.errors
             };
+        case 'SET_TOKEN':
+            return {
+                ...state,
+                turnstileToken: action.value,
+                errors: { ...state.errors, submit: '' }
+            };
+        case 'SENT':
+            return { ...initialState, sent: true };
         case 'RESET_FORM':
             return initialState;
         default:
@@ -70,14 +84,7 @@ const errorInputClasses = {
 
 export default function Inquire() {
     const [state, dispatch] = useReducer(formReducer, initialState);
-
-    const interests = [
-        { key: "webdev", label: "Web Development", color: "orange" },
-        { key: "video", label: "Videography", color: "yellow" },
-        { key: "music", label: "Music", color: "green" },
-        { key: "performance", label: "Performance", color: "blue" },
-        { key: "other", label: "Other", color: "violet" }
-    ];
+    const turnstileRef = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -95,14 +102,28 @@ export default function Inquire() {
             return;
         }
 
+        if (!state.turnstileToken) {
+            dispatch({ type: 'SET_ERRORS', errors: { submit: 'Please wait for the verification check to finish.' } });
+            return;
+        }
+
         dispatch({ type: 'SET_SENDING', value: true });
 
         try {
-            // Add your form submission logic here
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
+            const result = await sendInquiry({
+                name: state.name,
+                email: state.email,
+                interest: [...state.interest],
+                message: state.message,
+                company: state.company,
+                turnstileToken: state.turnstileToken,
+            });
 
-            // On success, reset the form
-            dispatch({ type: 'RESET_FORM' });
+            if (result.ok) {
+                dispatch({ type: 'SENT' });
+            } else {
+                dispatch({ type: 'SET_ERRORS', errors: result.errors });
+            }
         } catch (error) {
             dispatch({
                 type: 'SET_ERRORS',
@@ -110,8 +131,32 @@ export default function Inquire() {
             });
         } finally {
             dispatch({ type: 'SET_SENDING', value: false });
+            // Turnstile tokens are single-use, so get a fresh one for any retry
+            dispatch({ type: 'SET_TOKEN', value: '' });
+            turnstileRef.current?.reset();
         }
     };
+
+    if (state.sent) {
+        return (
+            <main className="min-h-screen w-full flex flex-col justify-center items-center p-4 sm:p-8 pt-20 sm:pt-24">
+                <div className="w-full max-w-4xl flex flex-col gap-8">
+                    <h1 className="text-indigo-500 text-center">Message Sent</h1>
+                    <Card className="w-full">
+                        <CardBody className="gap-6 bg-default-100 items-center text-center p-8">
+                            <p className="text-lg">
+                                Thanks for reaching out! I&apos;ll get back to you soon. A copy of your
+                                message is on its way to your inbox.
+                            </p>
+                            <AMButton color="indigo" shade={500} onClick={() => dispatch({ type: 'RESET_FORM' })}>
+                                Send Another
+                            </AMButton>
+                        </CardBody>
+                    </Card>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="min-h-screen w-full flex flex-col justify-center items-center p-4 sm:p-8 pt-20 sm:pt-24" id="smooth-wrapper">
@@ -197,7 +242,28 @@ export default function Inquire() {
                                     dispatch({ type: 'SET_FIELD', field: 'message', value })
                                 }
                                 minRows={4}
-                                classNames={!state.errors.name ? inputClasses : errorInputClasses}
+                                classNames={!state.errors.message ? inputClasses : errorInputClasses}
+                            />
+
+                            {/* Honeypot: hidden from people, filled in by bots */}
+                            <input
+                                type="text"
+                                name="company"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                aria-hidden="true"
+                                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                                value={state.company}
+                                onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'company', value: e.target.value })}
+                            />
+
+                            <Turnstile
+                                ref={turnstileRef}
+                                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                                options={{ theme: 'light', size: 'flexible', appearance: 'interaction-only' }}
+                                onSuccess={(token) => dispatch({ type: 'SET_TOKEN', value: token })}
+                                onExpire={() => dispatch({ type: 'SET_TOKEN', value: '' })}
+                                onError={() => dispatch({ type: 'SET_ERRORS', errors: { submit: 'Verification failed to load. Please refresh the page.' } })}
                             />
 
                             {state.errors.submit && (
