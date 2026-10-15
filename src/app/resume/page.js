@@ -7,7 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import AMButton from "@/app/_components/button";
 import {IoArrowDownSharp} from "react-icons/io5";
-import {Link} from "@heroui/react";
 
 const experience = [
     {
@@ -96,7 +95,7 @@ const coursework = [
     { name: "Digital Design Lab", description: "Design and implementation of digital systems, including a team design project. VHDL programming, FPGA programming on the DE10 Standard Development board using Quartus, logic synthesis, and assembly language programming." },
     { name: "Objects and Design", description: "Object-oriented programming methods for dealing with large programs. Focus on collaborative development roles and processes, effective debugging techniques, and testing to assure a quality product." },
     { name: "Programming Hardware/Software Systems", description: "Creation of complex execution and storage mechanisms, based on the RISC-V instruction set architecture. Low-level programming and memory management on the ARM mbed controller using C." },
-    { name: "Computer Organization and Programming", description: "An introduction to basic computer hardware, machine language, and assembly language using the LC3 architecture. Coverage of C programming and memory management including an individual game programming project on a Game Boy Advance emulator." },
+    { name: "Computer Organization and Programming", description: "An introduction to basic computer hardware, machine language, and assembly language using the LC3 architecture. Coverage of C programming and memory management." },
     { name: "Music Recording and Mixing", description: "Overview of concepts, techniques, hardware, and software used in audio production. Basics of audio hardware and acoustics, microphones and recording setups, and the function and usage of common audio effects." },
     { name: "Intro to Audio Tech I & II", description: "Critical understanding of, and hands-on experience with the fundamentals of analog and digital audio technology. Topics include signals and systems, electro-acoustics, sound effects, synthesis, music protocols, sampling, quantization, and digital effects. Group projects in music information retrieval using Python and real-time audio coding in C++ using the JUCE framework." },
     { name: "Intro to Artificial Intelligence", description: "An introduction to artificial intelligence and machine learning. Topics include intelligent system design methodologies, search and problem solving, supervised and reinforced learning." },
@@ -106,9 +105,9 @@ const coursework = [
 
 // Global h1–h6 styles are sized for hero/landing sections, so this page scales them down locally.
 const SECTION = "mb-10 p-6 md:p-8";
-const SECTION_TITLE = "text-3xl md:text-4xl mb-4";
-const ENTRY_TITLE = "text-xl md:text-2xl";
-const LABEL = "font-body font-bold text-base md:text-lg";
+const SECTION_TITLE = "text-2xl md:text-3xl mb-3";
+const ENTRY_TITLE = "text-lg md:text-xl";
+const LABEL = "font-body font-bold text-base";
 
 function EntryHeader({ title, location, date, className }) {
     return (
@@ -182,92 +181,81 @@ export default function Resume() {
                 </div>
                 <div
                     ref={el => sections.current[0] = el}
-                    className="mb-16 p-8 bg-orange-50"
+                    className={`${SECTION} bg-orange-50`}
                     id="sections"
                 >
-                    <h2 className="text-orange-500 mb-4">Education</h2>
-                    <div className="space-y-4">
-                        <div className="flex flex-col gap-2">
-                            <span className="flex flex-wrap justify-between items-center gap-x-4 text-orange-600">
-                                <h4>Georgia Institute of Technology<span className="font-normal opacity-80"> | Atlanta, GA</span></h4>
-                                <h5>August 2023&ndash;Present</h5>
-                            </span>
-                            <span>
-                                <h6>Bachelor of Science in Computational Media and Computer Engineering</h6>
-                                <p>Expected Graduation: May 2028</p>
-                            </span>
-                            <span>
-                                <p>Concentrations in Intelligence and Music Technology, and Distributed Systems and Software Design and Signal Processing</p>
-                            </span>
-                            <span><strong>GPA:</strong> 4.00</span>
+                    <h2 className={`${SECTION_TITLE} text-orange-500`}>Education</h2>
+                    <div className="space-y-5">
+                        <div className="flex flex-col gap-1">
+                            <EntryHeader title="Georgia Institute of Technology" location="Atlanta, GA" date={<>August 2023&ndash;Present</>} className="text-orange-600" />
+                            <p className="font-semibold">Bachelor of Science in Computational Media and Computer Engineering</p>
+                            <p>Concentrations in Intelligence and Music Technology, and Distributed Systems and Software Design and Signal Processing</p>
+                            <p><strong>GPA:</strong> 4.00 &middot; Expected Graduation May 2028</p>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <span className="flex flex-wrap justify-between items-center gap-x-4 text-orange-600">
-                                <h4>Fairleigh Dickinson University<span className="font-normal opacity-80"> | Teaneck, NJ</span></h4>
-                                <h5>September 2021&ndash;May 2023</h5>
-                            </span>
-                            <span>Dual Enrollment with high school &ndash; 12 Credit Hours</span>
-                            <span><strong>GPA:</strong> 3.92</span>
+                        <div className="flex flex-col gap-1">
+                            <EntryHeader title="Fairleigh Dickinson University" location="Teaneck, NJ" date={<>September 2021&ndash;May 2023</>} className="text-orange-600" />
+                            <p>Dual Enrollment with high school &ndash; 12 Credit Hours</p>
+                            <p><strong>GPA:</strong> 3.92</p>
                         </div>
                     </div>
                 </div>
                 <div
                     ref={el => sections.current[1] = el}
-                    className="mb-16 p-8 bg-yellow-50"
+                    className={`${SECTION} bg-yellow-50`}
                 >
-                    <h2 className="text-yellow-500 mb-4">Experience</h2>
-                    <div className="space-y-6">
+                    <h2 className={`${SECTION_TITLE} text-yellow-500`}>Experience</h2>
+                    <div className="space-y-5">
                         {experience.map((item, i) => (
                             <Entry key={i} item={item} headingClass="text-yellow-600" roleClass="text-yellow-700" />
                         ))}
                     </div>
                 </div>
                 <div
-                    ref={el => sections.current[3] = el}
-                    className="mb-16 p-8 bg-blue-50"
+                    ref={el => sections.current[2] = el}
+                    className={`${SECTION} bg-green-50`}
                 >
-                    <h2 className="text-blue-500 mb-4">Leadership</h2>
-                    <div className="space-y-6">
+                    <h2 className={`${SECTION_TITLE} text-green-600`}>Leadership</h2>
+                    <div className="space-y-5">
                         {leadership.map((item, i) => (
-                            <Entry key={i} item={item} headingClass="text-blue-600" roleClass="text-blue-700" />
+                            <Entry key={i} item={item} headingClass="text-green-700" roleClass="text-green-800" />
                         ))}
                     </div>
                 </div>
                 <div
-                    ref={el => sections.current[4] = el}
-                    className="mb-16 p-8 bg-violet-50"
+                    ref={el => sections.current[3] = el}
+                    className={`${SECTION} bg-blue-50`}
                 >
-                    <h2 className="text-violet-500 mb-4">Skills & Expertise</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 gap-y-2 gap-x-6">
+                    <h2 className={`${SECTION_TITLE} text-blue-500`}>Skills & Expertise</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6">
                         {skills.map(s => (
                             <div key={s.label}>
-                                <h5 className="text-violet-600">{s.label}</h5>
+                                <h3 className={`${LABEL} text-blue-600`}>{s.label}</h3>
                                 <p>{s.value}</p>
                             </div>
                         ))}
                     </div>
                 </div>
                 <div
-                    ref={el => sections.current[5] = el}
-                    className="mb-16 p-8 bg-pink-50"
+                    ref={el => sections.current[4] = el}
+                    className={`${SECTION} bg-violet-50`}
                 >
-                    <h2 className="text-pink-500 mb-4">Relevant Coursework</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 py-4 gap-y-4 gap-x-6">
+                    <h2 className={`${SECTION_TITLE} text-violet-500`}>Relevant Coursework</h2>
+                    <div className="columns-1 md:columns-2 gap-x-6">
                         {coursework.map(c => (
-                            <div key={c.name}>
-                                <h5 className="text-pink-600">{c.name}</h5>
+                            <div key={c.name} className="break-inside-avoid mb-4">
+                                <h3 className={`${LABEL} text-violet-600`}>{c.name}</h3>
                                 <p>{c.description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
                 <div
-                    ref={el => sections.current[6] = el}
+                    ref={el => sections.current[5] = el}
                     className="mb-16 text-center"
                 >
-                    <h2 className="text-indigo-500 mb-4">Let&apos;s Connect!</h2>
+                    <h2 className={`${SECTION_TITLE} text-indigo-500`}>Let&apos;s Connect!</h2>
                     <p className="text-default-600 mb-6">I don&apos;t have a Linkedin yet, but you can sure send me an
-                        email at <Link href="mailto:aidan.mascoli@gmail.com" color="indigo">aidan.mascoli@gmail.com</Link>, or use
+                        email at <a href="mailto:aidan.mascoli@gmail.com" className="text-indigo-500 hover:text-indigo-700 underline underline-offset-2 transition-colors">aidan.mascoli@gmail.com</a>, or use
                         this contact form.</p>
                     <div className="flex justify-center gap-4">
                         <AMButton color="indigo" shade={500} href="/inquire">Contact Me</AMButton>
