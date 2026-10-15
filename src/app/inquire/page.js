@@ -1,17 +1,16 @@
 'use client'
 
 import { useReducer, useRef } from 'react';
-import { Card, CardBody, Input, Select, SelectItem, Textarea } from "@heroui/react";
+import { Card, CardBody, Input, Textarea } from "@heroui/react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import AMButton from "@/app/_components/button";
 import { sendInquiry } from "@/app/inquire/actions";
-import { interests } from "@/app/inquire/interests";
 
 // Form reducer
 const initialState = {
     name: '',
     email: '',
-    interest: new Set([]),
+    subject: '',
     message: '',
     company: '', // honeypot
     turnstileToken: '',
@@ -95,7 +94,7 @@ export default function Inquire() {
         if(!state.email.match('[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?')) errors.email = 'Must be a valid email';
         if (!state.email.trim()) errors.email = 'Email is required';
         if (!state.message.trim()) errors.message = 'Message is required';
-        if (state.interest.size === 0) errors.interest = 'Please select an area of interest';
+        if (!state.subject.trim()) errors.subject = 'Subject is required';
 
         if (Object.keys(errors).length > 0) {
             dispatch({ type: 'SET_ERRORS', errors });
@@ -113,7 +112,7 @@ export default function Inquire() {
             const result = await sendInquiry({
                 name: state.name,
                 email: state.email,
-                interest: [...state.interest],
+                subject: state.subject,
                 message: state.message,
                 company: state.company,
                 turnstileToken: state.turnstileToken,
@@ -195,40 +194,20 @@ export default function Inquire() {
                                 />
                             </div>
 
-                            <Select
+                            <Input
                                 isRequired
-                                selectionMode="multiple"
                                 variant="bordered"
-                                label="Area(s) of Interest"
-                                selectedKeys={state.interest}
-                                isInvalid={!!state.errors.interest}
-                                errorMessage={state.errors.interest}
-                                onSelectionChange={(value) => {
-                                    dispatch({ type: 'SET_FIELD', field: 'interest', value });
-                                }}
-                                classNames={{
-                                    trigger: [
-                                        'transition-all!',
-                                        'border-indigo-500',
-                                        'data-[hover=true]:border-indigo-400',
-                                        'data-[open=true]:border-indigo-600!',
-                                        'data-[focus=true]:border-indigo-500',
-                                        'text-indigo-500',
-                                        'data-[hover=true]:text-indigo-400',
-                                        'data-[open=true]:text-indigo-600!',
-                                        'data-[focus=true]:text-indigo-500',
-                                    ],
-                                    label: 'text-inherit!',
-                                    value: '!text-foreground',
-                                    popoverContent: [
-                                        'bg-default-100'
-                                    ]
-                                }}
-                            >
-                                {interests.map((interest) => (
-                                    <SelectItem key={interest.key} value={interest.key} className={`text-${interest.color}-500`}>{interest.label}</SelectItem>
-                                ))}
-                            </Select>
+                                type="text"
+                                label="Subject"
+                                maxLength={150}
+                                value={state.subject}
+                                isInvalid={!!state.errors.subject}
+                                errorMessage={state.errors.subject}
+                                onValueChange={(value) =>
+                                    dispatch({ type: 'SET_FIELD', field: 'subject', value })
+                                }
+                                classNames={!state.errors.subject ? inputClasses : errorInputClasses}
+                            />
 
                             <Textarea
                                 isRequired
