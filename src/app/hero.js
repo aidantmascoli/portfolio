@@ -28,21 +28,28 @@ export default function Hero({ container }) {
         load.from(paragraph.current, {opacity: 0, ease: 'power2.out'}, 0.75);
         load.from(button.current, {opacity: 0, ease: 'power2.out'}, 1);
 
+        // Distance needed to push an element fully past the left edge of the viewport,
+        // measured from its natural (untransformed) position. xPercent was relative to the
+        // element's own width, which left the right edge of wide elements on-screen on mobile.
+        const offLeft = (i, el) => -(el.getBoundingClientRect().right - gsap.getProperty(el, 'x')) - 16;
+        const offRight = (i, el) => window.innerWidth - (el.getBoundingClientRect().left - gsap.getProperty(el, 'x')) + 16;
+
         const scroll = gsap.timeline({
             scrollTrigger: {
                 trigger: hero.current,
                 start: 'top top',
                 end: 'bottom top',
                 pin: true,
-                scrub: 1
+                scrub: 1,
+                invalidateOnRefresh: true
             }
         });
 
-        scroll.to(heroImg.current, {xPercent: 110, ease: 'power2.in'});
-        scroll.to(title.current, {xPercent: -110, ease: 'power2.in'}, 0.15);
-        scroll.to(subtitle.current, {xPercent: -110, ease: 'power2.in'}, 0.3);
-        scroll.to(paragraph.current, {xPercent: -110, ease: 'power2.in'}, 0.45);
-        scroll.to(button.current, {xPercent: -110, ease: 'power2.in'}, 0.6);
+        scroll.to(heroImg.current, {x: offRight, ease: 'power2.in'});
+        scroll.to(title.current, {x: offLeft, ease: 'power2.in'}, 0.15);
+        scroll.to(subtitle.current, {x: offLeft, ease: 'power2.in'}, 0.3);
+        scroll.to(paragraph.current, {x: offLeft, ease: 'power2.in'}, 0.45);
+        scroll.to(button.current, {x: offLeft, ease: 'power2.in'}, 0.6);
     }, {scope: container});
 
     const onSeeClick = contextSafe(() => {
@@ -67,7 +74,8 @@ export default function Hero({ container }) {
                 </span>
         </div>
         <div ref={heroImg} className={'relative opacity-0'}>
-            <Image src={'/images/headshot.jpg'} alt={'Headshot'} fill objectFit={'cover'} objectPosition={'center bottom'}/>
+            <Image src={'/images/headshot.jpg'} alt={'Headshot'} fill priority sizes={'(min-width: 768px) 50vw, 100vw'}
+                   className={'object-cover object-[center_30%] md:object-bottom'}/>
         </div>
     </section>
 }
