@@ -168,7 +168,7 @@ export default function Resume() {
     });
 
     return (
-        <main className="min-h-screen w-full flex flex-col items-center overflow-x-hidden" id="smooth-wrapper" ref={container}>
+        <main className="min-h-screen w-full flex flex-col items-center overflow-x-clip" id="smooth-wrapper" ref={container}>
             <div className="w-full max-w-7xl px-4 sm:px-8" id="smooth-content">
                 <div className="flex flex-col gap-6 items-center justify-center text-center h-screen pt-24 pb-16">
                     <div ref={title} className="text-red-400 flex flex-col gap-4">

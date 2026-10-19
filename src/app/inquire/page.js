@@ -1,7 +1,7 @@
 'use client'
 
 import { useReducer, useRef } from 'react';
-import { Card, CardBody, Input, Textarea } from "@heroui/react";
+import { Input, Textarea } from "@heroui/react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import AMButton from "@/app/_components/button";
 import { sendInquiry } from "@/app/inquire/actions";
@@ -141,8 +141,7 @@ export default function Inquire() {
             <main className="min-h-screen w-full flex flex-col justify-center items-center p-4 sm:p-8 pt-20 sm:pt-24">
                 <div className="w-full max-w-4xl flex flex-col gap-8">
                     <h1 className="text-indigo-500 text-center">Message Sent</h1>
-                    <Card className="w-full">
-                        <CardBody className="gap-6 bg-default-100 items-center text-center p-8">
+                    <div className="w-full p-6 md:p-8 bg-indigo-50 flex flex-col gap-6 items-center text-center">
                             <p className="text-lg">
                                 Thanks for reaching out! I&apos;ll get back to you soon. A copy of your
                                 message is on its way to your inbox.
@@ -150,8 +149,7 @@ export default function Inquire() {
                             <AMButton color="indigo" shade={500} onClick={() => dispatch({ type: 'RESET_FORM' })}>
                                 Send Another
                             </AMButton>
-                        </CardBody>
-                    </Card>
+                    </div>
                 </div>
             </main>
         );
@@ -162,8 +160,7 @@ export default function Inquire() {
             <div className="w-full max-w-4xl flex flex-col gap-8" id="smooth-content">
                 <h1 className="text-indigo-500 text-center">Get In Touch</h1>
 
-                <Card className="w-full">
-                    <CardBody className="gap-6 bg-default-100">
+                <div className="w-full p-6 md:p-8 bg-indigo-50">
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                             <div className="flex flex-col md:flex-row gap-4">
                                 <Input
@@ -260,8 +257,7 @@ export default function Inquire() {
                                 </AMButton>
                             </div>
                         </form>
-                    </CardBody>
-                </Card>
+                </div>
             </div>
         </main>
     );
