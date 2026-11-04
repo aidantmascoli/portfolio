@@ -36,12 +36,13 @@ export function Stack({ children }) {
 /**
  * An image with an optional caption. Put the file in /public/images and pass "/images/name.jpg".
  * width/height are the image's real pixel size (used for its aspect ratio); `size` limits how wide it displays.
+ * `pixelated` keeps pixel art sharp when it's scaled up (e.g. small game screenshots).
  */
-export function Figure({ src, alt, caption, width = 1600, height = 900, size = "full" }) {
+export function Figure({ src, alt, caption, width = 1600, height = 900, size = "full", pixelated = false }) {
     const sizeClass = { sm: "max-w-sm", md: "max-w-xl", lg: "max-w-3xl", full: "max-w-full" }[size];
     return (
         <figure className={`w-full ${sizeClass} mx-auto flex flex-col gap-2`}>
-            <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" sizes="(min-width: 1024px) 1024px, 100vw" />
+            <Image src={src} alt={alt} width={width} height={height} className={`w-full h-auto ${pixelated ? "[image-rendering:pixelated]" : ""}`} sizes="(min-width: 1024px) 1024px, 100vw" unoptimized={pixelated} />
             {caption && <figcaption className="text-sm text-default-500 text-center">{caption}</figcaption>}
         </figure>
     );

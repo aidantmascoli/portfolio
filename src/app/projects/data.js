@@ -94,6 +94,7 @@ export const projects = [
         role: "Individual Project",
         date: "March 2025",
         color: "blue",
+        image: { src: "/images/gba-snake/title.png", alt: "Title screen of the Game Boy Advance snake game, with a brick wall background and a Press START prompt" },
         summary: "A fully functional snake game written in C for the Game Boy Advance, running on an emulator and talking directly to the hardware through memory-mapped registers.",
         highlights: [
             "Individually designed and implemented software for a fully functional snake game to run on a Game Boy Advance emulator.",
