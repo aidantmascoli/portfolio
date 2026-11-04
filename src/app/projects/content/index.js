@@ -4,7 +4,7 @@ import dramatechBanquet from "./dramatech-banquet";
 import spotifyWrapper from "./spotify-wrapper";
 import gbaSnake from "./gba-snake";
 import onsetDetection from "./onset-detection";
-import traverseCs from "./traverse-cs";
+import ledBoard from "./led-board";
 
 export const projectContent = {
     "retcom87": retcom87,
@@ -12,5 +12,5 @@ export const projectContent = {
     "spotify-wrapper": spotifyWrapper,
     "gba-snake": gbaSnake,
     "onset-detection": onsetDetection,
-    "traverse-cs": traverseCs,
+    "led-board": ledBoard,
 };
