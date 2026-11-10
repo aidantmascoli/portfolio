@@ -40,11 +40,16 @@ export default function Content() {
             </p>
             <Callout title="A note on the live site">
                 <p>
-                    Since we built the project, Spotify has removed two parts of its Web API that we relied on: the
-                    30-second track previews, and the audio features data used for the &ldquo;ideal track&rdquo;
-                    stat. Song clips and the ideal track no longer work on the live site. Everything else still
-                    works as it did.
+                    Spotify has changed its Web API a lot since we built the project, and several features no longer
+                    work as they did:
                 </p>
+                <ul>
+                    <li><strong>Song previews:</strong> Spotify removed 30-second track previews, so the play buttons and background music don&rsquo;t work.</li>
+                    <li><strong>Ideal track:</strong> the audio features data behind the &ldquo;ideal track&rdquo; stat was removed.</li>
+                    <li><strong>Popularity:</strong> Spotify no longer shares track popularity, so any track added since then shows a popularity of 0.</li>
+                    <li><strong>Genres:</strong> apps in development mode no longer get genre information, so top genres can&rsquo;t be shown. Spotify&rsquo;s requirements for leaving development mode are now demanding, and our app doesn&rsquo;t qualify.</li>
+                    <li><strong>Who can log in:</strong> in development mode, only five Spotify users approved by the developers can sign in. Most of the app can only be demoed by our team members.</li>
+                </ul>
             </Callout>
         </Section>
 
